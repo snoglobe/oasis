@@ -59,6 +59,7 @@ class Scanner(val source: String) {
             '\n' -> line++
             '"' -> string()
             '\'' -> char()
+            '%' -> addToken(MOD)
             else -> if(c.isDigit())
                         number()
                     else if(c.isLetter())
@@ -86,7 +87,7 @@ class Scanner(val source: String) {
             return
         }
         advance()
-        var value: String = source.substring(start + 1, current - 1)
+        var value: String = source.substring(start + 1, current - 1).replace("\\r", "\r").replace("\\n", "\n")
         addToken(STRING, value)
     }
 
@@ -109,14 +110,14 @@ class Scanner(val source: String) {
         return source[current + 1]
     }
 
-    private fun number(){
+    private fun number(negative: Boolean = false){
         while(peek().isDigit()) advance()
         if(peek() == '.' && peekNext().isDigit()) {
             advance()
             while(peek().isDigit()) advance()
         }
 
-        addToken(NUMBER, source.substring(start, current).toDouble())
+        addToken(NUMBER, if (!negative) source.substring(start, current).toDouble() else -( source.substring(start, current).toDouble()) )
     }
 
     private fun match(expected: Char): Boolean {

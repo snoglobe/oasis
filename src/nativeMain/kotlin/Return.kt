@@ -1,1 +1,1 @@
-class Return(val value: Any?) : Exception() {}
+data class Return(var value: Any?) : Throwable()

@@ -12,7 +12,7 @@ class Environment(val enclosing: Environment? = null) {
         if (enclosing != null) {
             return enclosing.get(name)
         }
-        throw RuntimeError(-1,"Undefined variable '${name.lexeme}'")
+        throw RuntimeError(name.line,"Undefined variable '${name.lexeme}'")
     }
 
     fun assign(name: Token, value: Any?) {
@@ -24,7 +24,7 @@ class Environment(val enclosing: Environment? = null) {
             enclosing.assign(name, value)
             return
         }
-        throw RuntimeError(-1, "Undefined variable '${name.lexeme}'")
+        throw RuntimeError(name.line, "Undefined variable '${name.lexeme}'")
     }
 
     override fun toString(): String {
