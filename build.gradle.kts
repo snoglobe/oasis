@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform") version "1.6.0"
-    //kotlin("jvm") version("1.6.10")
 }
 
 group = "me.snwy"
@@ -19,7 +18,6 @@ kotlin {
         isMingwX64 -> mingwX64("native")
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
-    jvm()
     nativeTarget.apply {
         binaries {
             executable {

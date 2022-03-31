@@ -101,6 +101,9 @@ class Parser(private val tokens: List<Token>) {
             }
             eat(RBRAC)
             result = OasisList(body, begin)
+        } else if(peek(MINUS)) {
+            eat(MINUS)
+            result = Negate(expression(), begin)
         } else {
             Oasis.error(tokens[current].line, "Invalid expression")
             println(tokens.slice(current until tokens.size))

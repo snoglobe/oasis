@@ -90,5 +90,6 @@ object StandardLibrary {
         x.define("sys", sys)
         x.define("type", type)
         x.define("string", string)
+        x.define("range", KotlinFunction2(::rangeFun))
     }
 }

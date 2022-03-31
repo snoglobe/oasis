@@ -5,9 +5,8 @@ import platform.posix.*
 fun main(args: Array<String>) {
     Oasis.main(args)
 }
-
+var globalInterpreter : Interpreter? = null
 object Oasis {
-
     fun readAllText(filePath: String): String {
         val returnBuffer = StringBuilder()
         val file = fopen(filePath, "r") ?:
@@ -47,6 +46,7 @@ object Oasis {
             println("Welcome to the Oasis!")
         }
         var interpreter = Interpreter()
+        globalInterpreter = interpreter
         (interpreter.environment.get(Token(TokenType.IDENTIFIER, "sys", null, -1)) as OasisPrototype).set("argv", ArrayList<Any?>())
         var program = args.find {
             var result = false

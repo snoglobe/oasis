@@ -11,6 +11,7 @@ abstract class Expr(var line: Int) {
         fun visitProto(proto: Proto): T
         fun visitIndexer(indexer: Indexer): T
         fun visitList(list: OasisList): T
+        fun visitNegate(negate: Negate): T
     }
     abstract fun <T> accept(visitor: Visitor<T>): T
 }
@@ -173,4 +174,11 @@ class OasisList(val exprs: ArrayList<Expr>, line: Int): Expr(line) {
     override fun <T> accept(visitor: Visitor<T>): T {
         return visitor.visitList(this)
     }
+}
+
+class Negate(val value: Expr, line: Int): Expr(line) {
+    override fun <T> accept(visitor: Visitor<T>): T {
+        return visitor.visitNegate(this)
+    }
+
 }

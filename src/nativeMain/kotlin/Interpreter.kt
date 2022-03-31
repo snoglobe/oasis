@@ -1,5 +1,6 @@
 import standardLibrary.StandardLibrary
 import standardLibrary.base
+import kotlin.native.concurrent.AtomicReference
 
 class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Unit> {
 
@@ -10,6 +11,7 @@ class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Unit> {
 
     init {
         StandardLibrary.generateLib(environment, this)
+        //AtomicReference(Oasis.globalInterpreter).value = this
     }
 
     inline fun eval(expr: Expr): Any? {
@@ -222,6 +224,10 @@ class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Unit> {
             ev.add(eval(i))
         }
         return ev
+    }
+
+    override fun visitNegate(negate: Negate): Any? {
+        return -(eval(negate.value) as Double)
     }
 
 }
